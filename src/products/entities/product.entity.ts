@@ -10,7 +10,7 @@ export class Product {
     @Column({type: "float"})
     price: number;
     @Column({type: "int"})
-    couneSeal: number;
-    @Column({type: "uuid"})
-    provider: string;
+    countSeal: number;
+    //@Column({type: "uuid"})
+    //provider: string;
 }

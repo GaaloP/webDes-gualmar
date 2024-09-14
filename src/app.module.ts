@@ -10,16 +10,19 @@ import { ConfigModule } from '@nestjs/config'
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
-    type: "postgres",
-    host: process.env.host,
-    port: +process.env.port,
-    username: "postgres",
-    password: process.env.pass,
-    database: process.env.name,
-    entities: [],
-    autoLoadEntities: true,
-    synchronize: true
-  }), EmployeesModule, ProductsModule],
+      type: "postgres",
+      host: process.env.host,
+      port: +process.env.port,
+      username: "postgres",
+      password: process.env.pass,
+      database: process.env.name,
+      entities: [],
+      autoLoadEntities: true,
+      synchronize: true
+    }), 
+    EmployeesModule, 
+    ProductsModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
