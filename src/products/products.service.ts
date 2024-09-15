@@ -51,8 +51,11 @@ export class ProductsService {
   }
 
   findOne(id: string) {
-    const product = this.products.filter((product) => product.productId ==id) [0];
+    const product = this.productRepository.findOneBy({
+      productId: id
+    })
     if(!product) throw new NotFoundException();
+    //const product = this.products.filter((product) => product.productId ==id) [0];
     return product;
   }
 
@@ -64,22 +67,36 @@ export class ProductsService {
 
   update(id: string, updateProductDto: UpdateProductDto) {
     let productU = this.findOne(id);
+    this.products = this.products.map((productU)=>{
+      if(productU.productId==id) return {
+        ...productU,
+        ...updateProductDto
+      }
+      return productU
+    } )
+    /*
     productU = {
       ...productU,
       ...updateProductDto
     }
     this.products = this.products.map((product)=>{
       if(product.productId == id){
-        product=productU;
+        product = productU;
       }
       return product;
     })
     return productU;
+    */
   }
 
   remove(id: string) {
+    return this.productRepository.delete({
+      productId: id
+    })
+    /*
     this.findOne(id);
     this.products = this.products.filter((product)=> product.productId != id)
     return this.products;
+    */
   }
 }
