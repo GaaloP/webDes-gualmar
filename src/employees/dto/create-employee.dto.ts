@@ -1,4 +1,4 @@
-import { IsOptional, IsString, IsUUID } from "class-validator"
+import { IsEmail, IsOptional, IsString, IsUUID, MaxLength } from "class-validator"
 
 export class CreateEmployeeDto {
     @IsString()
@@ -6,9 +6,15 @@ export class CreateEmployeeDto {
     @IsOptional()
     id: string
     @IsString()
+    @MaxLength(30)
     name: string
     @IsString()
+    @MaxLength(70)
     lastName: string
     @IsString()
+    @MaxLength(10)
     phoneNumber: string
+    @IsEmail()
+    @IsString()
+    email: string
 }
