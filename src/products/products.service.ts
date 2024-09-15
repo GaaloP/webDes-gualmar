@@ -5,6 +5,7 @@ import {v4 as uuid} from 'uuid';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
 import { Repository } from 'typeorm';
+import { throwError } from 'rxjs';
 
 @Injectable()
 export class ProductsService {
@@ -65,15 +66,14 @@ export class ProductsService {
     return product;
   }
 
-  update(id: string, updateProductDto: UpdateProductDto) {
-    let productU = this.findOne(id);
-    this.products = this.products.map((productU)=>{
-      if(productU.productId==id) return {
-        ...productU,
-        ...updateProductDto
-      }
-      return productU
-    } )
+  async update(id: string, updateProductDto: UpdateProductDto) {
+    const productU = await this.productRepository.preload({
+      productId: id,
+      ...updateProductDto
+    })
+    if (!productU) throw new NotFoundException()
+    this.productRepository.save(productU);
+    return productU;
     /*
     productU = {
       ...productU,
@@ -90,9 +90,13 @@ export class ProductsService {
   }
 
   remove(id: string) {
-    return this.productRepository.delete({
+    this.findOne(id)
+    this.productRepository.delete({
       productId: id
     })
+    return {
+      mesage: `Objeto con id ${id} eliminado correctamente`
+    }
     /*
     this.findOne(id);
     this.products = this.products.filter((product)=> product.productId != id)
