@@ -13,8 +13,8 @@ export class EmployeesService {
     private employeeRepository: Repository<Employee>
   ){}
 
-  async create(createEmployeeDto: CreateEmployeeDto) {
-    const employee = await this.employeeRepository.save(createEmployeeDto)
+  create(createEmployeeDto: CreateEmployeeDto) {
+    const employee = this.employeeRepository.save(createEmployeeDto)
     return employee
   }
 
