@@ -1,4 +1,4 @@
-import { Provider } from "src/provider/entities/provider.entity";
+import { Provider } from "src/providers/entities/provider.entity";
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from "typeorm";
 import { UUID } from "typeorm/driver/mongodb/bson.typings";
 
