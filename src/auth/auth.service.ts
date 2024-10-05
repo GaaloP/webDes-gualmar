@@ -36,6 +36,6 @@ export class AuthService {
       userRoles: user.userRoles
     }
     const token = this.jwtService.sign(payload)
-    return `Sesión iniciada ${token}`;
+    return token;
   }
 }
