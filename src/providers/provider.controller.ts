@@ -1,8 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, UseGuards, UnauthorizedException } from '@nestjs/common';
 import { ProviderService } from './provider.service';
 import { CreateProviderDto } from './dto/create-provider.dto';
 import { UpdateProviderDto } from './dto/update-provider.dto';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
+import { UserData } from 'src/auth/decorators/user.decorator';
+import { User } from 'src/auth/entities/user.entity';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 @UseGuards(AuthGuard)
 @Controller('providers')
@@ -14,8 +18,11 @@ export class ProviderController {
     return this.providerService.create(createProviderDto);
   }
 
+  @Roles(["Admin"])
+  @UseGuards(RolesGuard)
   @Get()
-  findAll() {
+  findAll(@UserData() user: User) {
+    if (user.userRoles.includes("Employee")) throw new UnauthorizedException("no se pode")
     return this.providerService.findAll();
   }
 
