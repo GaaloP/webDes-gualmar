@@ -10,7 +10,10 @@ export class Manager {
     managerName: string
     @Column('float')
     managerSalary: number
-    @Column('text')
+    @Column({
+        type: "text",
+        unique: true
+    })
     managerEmail: string
     @Column('text')
     managerPhoneNumber: string

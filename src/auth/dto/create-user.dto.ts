@@ -1,4 +1,4 @@
-import { IsEmail, IsString, MinLength } from "class-validator";
+import { IsEmail, IsIn, IsOptional, IsString, MinLength } from "class-validator";
 import { Entity } from "typeorm";
 import { User } from "../entities/user.entity";
 
@@ -9,4 +9,7 @@ export class CreateUserDto extends User {
     userEmail: string
     @MinLength(8)
     userPassword: string
+    @IsOptional()
+    @IsIn(["Admin", "Employee", "Manager"])
+    userRoles: string[]
 }

@@ -38,4 +38,13 @@ export class AuthService {
     const token = this.jwtService.sign(payload)
     return token;
   }
+
+  async updateUser(updateUserDto: UpdateUserDto, userEmail: string){
+    const user = await this.userRepository.preload({
+      userEmail,
+      ...updateUserDto
+    })
+    this.userRepository.save(user)
+    return user;
+  }
 }
