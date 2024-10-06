@@ -5,8 +5,18 @@ import { UpdateRegionDto } from './dto/update-region.dto';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { ROLES } from 'src/auth/constants/roles.constant';
 import { ApiAuth } from 'src/auth/decorators/api.decorator';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Region } from './entities/region.entity';
 
 @ApiAuth()
+@ApiResponse({
+  status: 201,
+  example: {
+    regionName: "Centro",
+    regionStates: ['CMX','EMX','QRO']
+  } as Region
+})
+@ApiTags('REGIONS')
 @Controller('regions')
 export class RegionsController {
   constructor(private readonly regionsService: RegionsService) {}
