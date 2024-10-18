@@ -9,19 +9,19 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Region } from './entities/region.entity';
 
 @ApiAuth()
-@ApiResponse({
-  status: 201,
-  example: {
-    regionName: "Centro",
-    regionStates: ['CMX','EMX','QRO']
-  } as Region
-})
 @ApiTags('REGIONS')
 @Controller('regions')
 export class RegionsController {
   constructor(private readonly regionsService: RegionsService) {}
 
   @Auth()
+  @ApiResponse({
+    status: 201,
+    example: {
+      regionName: "Centro",
+      regionStates: ['CMX','EMX','QRO']
+    } as Region
+  })
   @Post()
   create(@Body() createRegionDto: CreateRegionDto) {
     return this.regionsService.create(createRegionDto);
