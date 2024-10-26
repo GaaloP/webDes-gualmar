@@ -37,9 +37,8 @@ export class ManagersService {
   }
 
   remove(id: string) {
-    this.managerRepository.delete({
+    return this.managerRepository.delete({
       managrId: id
     })
-    return `Se elimino el manager con id: ${id}`;
   }
 }
