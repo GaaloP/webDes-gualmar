@@ -16,7 +16,11 @@ export class ProviderService {
   }
 
   findAll() {
-    return this.providerRepositiry.find();
+    return this.providerRepositiry.find({
+      relations: {
+        products: true
+      }
+    });
   }
 
   findByName(name: string){
@@ -28,8 +32,13 @@ export class ProviderService {
   }
 
   findOne(id: string) {
-    return this.providerRepositiry.findOneBy({
-      providerId: id
+    return this.providerRepositiry.findOne({
+      where: {
+        providerId: id
+      },
+      relations: {
+        products: true
+      }
     });
   }
 
