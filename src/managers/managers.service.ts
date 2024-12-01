@@ -24,16 +24,20 @@ export class ManagersService {
     });
   }
 
-  findOne(id: string) {
+  findOneById(id: string) {
     const manager = this.managerRepository.findOne({
       where: {managrId: id},
-      relations: {location: true}
+      relations: {
+        location: true,
+        user: true
+      }
     })
     if (!manager) throw new NotFoundException()
     return manager;
   }
 
-  async update(id: string, UpdateManagerDto: UpdateManagerDto) {
+  async update(id: string, UpdateManagerDto: UpdateManagerDto
+  ) {
     const manager = await this.managerRepository.preload({
       managrId: id,
       ... UpdateManagerDto
